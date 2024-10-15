@@ -1,0 +1,92 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+# .NET Core related files
+*.exe
+*.dll
+*.log
+*.sql
+*.sqlite
+*.pdb
+*.mdb
+*.zip
+*.nuget
+*.vspscc
+*.vssscc
+
+# Build directories
+bin/
+obj/
+out/
+PublishProfiles/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# Visual Studio Code settings
+.vscode/
+
+# Rider settings
+.idea/
+
+# Resharper
+.ReSharper/
+*._ReSharper.Caches/
+
+# Azure Pipelines
+/.azuredevops/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Code directories
+.vscode/
+
+# Visual Studio Working Files
+.vs/
+*.sln.docstates
+
+# Dotnet Core files
+project.lock.json
+project.fragment.lock.json
+
+# NPM Dependencies if applicable (in case you're using Node.js with MVC)
+node_modules/
+
+# Docker files
+.docker/
+Dockerfile
+
+# Publish output
+publish/
+
+# Database files
+*.mdf
+*.ldf
+
+# Backup and archive files
+*.bak
+*.bkp
+*.swp
+*.temp
+*.tmp
+*.old
+*.backup
+
+# JetBrains Rider
+.idea/
