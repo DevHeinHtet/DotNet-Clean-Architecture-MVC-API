@@ -1,6 +1,7 @@
 using Application;
 using Infrastructure;
 using Serilog;
+using WebApp.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +22,32 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.WriteTo.Console().ReadFrom.Configuration(context.Configuration);
 });
 
+// Configure Swagger
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Clean Architecture Api",
+        Version = "v1",
+        Description = "API documentation for My .NET Core MVC Application",
+    });
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Enable Swagger UI only in Development
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+        options.RoutePrefix = string.Empty; // Set Swagger UI at the root
+    });
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -41,6 +64,8 @@ app.UseCors("AllowAllOrigins");
 
 app.UseSerilogRequestLogging();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseRouting();
 
 app.UseAuthorization();
@@ -48,5 +73,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllers();
 
 app.Run();

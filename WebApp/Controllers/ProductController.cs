@@ -1,5 +1,7 @@
-﻿using Application.Services;
+﻿using Application.Products.Commands.Create;
+using Application.Services;
 using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers
@@ -9,10 +11,12 @@ namespace WebApp.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ProductService _productService;
+        private readonly ISender _sender;
 
-        public ProductController(ProductService productService)
+        public ProductController(ProductService productService, ISender sender)
         {
             _productService = productService;
+            _sender = sender;
         }
 
         [HttpGet]
@@ -30,10 +34,10 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromForm] Product product)
+        public async Task<ActionResult> Create([FromForm] CreateProductCommand productCommand)
         {
-            await _productService.AddProductAsync(product);
-            return CreatedAtAction(nameof(GetById), new { id = product.ID }, product);
+            var productId = await _sender.Send(productCommand);
+            return CreatedAtAction(nameof(GetById), new { id = productId }, productId);
         }
 
         [HttpPut("{id}")]

@@ -48,5 +48,10 @@ namespace Infrastructure.Repositories
                 _context.Products.Remove(existingProduct);
             }
         }
+
+        public async Task<bool> IsExist(string name)
+        {
+            return await _context.Products.AnyAsync(x => x.Name == name);
+        }
     }
 }

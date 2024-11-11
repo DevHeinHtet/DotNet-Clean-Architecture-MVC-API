@@ -1,5 +1,7 @@
-﻿using Application.Services;
+﻿using Application.Behaviors;
+using Application.Services;
 using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -10,7 +12,13 @@ namespace Application
             this IServiceCollection services)
         {
             var assembly = typeof(DependencyInjection).Assembly;
+            services.AddMediatR(configuration =>
+                configuration.RegisterServicesFromAssembly(assembly));
             services.AddValidatorsFromAssembly(assembly);
+
+            services.AddTransient(
+              typeof(IPipelineBehavior<,>),
+              typeof(ValidationBehavior<,>));
 
             services.AddScoped<ProductService>();
 
