@@ -16,9 +16,7 @@ namespace Application
                 configuration.RegisterServicesFromAssembly(assembly));
             services.AddValidatorsFromAssembly(assembly);
 
-            services.AddTransient(
-              typeof(IPipelineBehavior<,>),
-              typeof(ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             services.AddScoped<ProductService>();
 
